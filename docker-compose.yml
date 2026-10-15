@@ -1,0 +1,87 @@
+# Local dev stack: Strapi 5 (LaunchPad) + Next.js + PostgreSQL on OrbStack.
+# `next` shares strapi's network namespace so `localhost:1337` resolves to Strapi
+# for both the browser and Next's server-side fetches (no source patching needed).
+x-node: &node
+  image: node:22-bookworm-slim
+  environment: &node-env
+    YARN_NODE_LINKER: node-modules
+    YARN_ENABLE_TELEMETRY: "0"
+    YARN_ENABLE_SCRIPTS: "false"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  strapi:
+    <<: *node
+    working_dir: /app
+    command: sh -c "corepack enable && corepack prepare yarn@4.5.0 --activate && yarn install --immutable && yarn develop"
+    ports:
+      - "1337:1337"
+      - "3001:3001" # published here because `nuxt` joins this network namespace
+    environment:
+      <<: *node-env
+      HOST: 0.0.0.0
+      PORT: "1337"
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: "5432"
+      DATABASE_NAME: ${POSTGRES_DB}
+      DATABASE_USERNAME: ${POSTGRES_USER}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      APP_KEYS: ${APP_KEYS}
+      API_TOKEN_SALT: ${API_TOKEN_SALT}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      CLIENT_URL: http://localhost:3001
+      PREVIEW_SECRET: ${PREVIEW_SECRET}
+      STRAPI_TELEMETRY_DISABLED: "true"
+    volumes:
+      - ./strapi:/app
+      - strapi_node_modules:/app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://localhost:1337/_health').then(r=>process.exit(r.ok||r.status===204?0:1)).catch(()=>process.exit(1))\""]
+      interval: 10s
+      timeout: 5s
+      retries: 60
+      start_period: 60s
+
+  nuxt:
+    <<: *node
+    network_mode: "service:strapi"
+    working_dir: /app
+    command: sh -c "corepack enable && corepack prepare yarn@4.5.0 --activate && yarn install --immutable && yarn dev"
+    environment:
+      <<: *node-env
+      PORT: "3001"
+      WEBSITE_URL: http://localhost:3001
+      STRAPI_URL: http://localhost:1337
+      PREVIEW_SECRET: ${PREVIEW_SECRET}
+      SESSION_SECRET: ${SESSION_SECRET}
+    volumes:
+      - ./nuxt:/app
+      - nuxt_node_modules:/app/node_modules
+    depends_on:
+      strapi:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  strapi_node_modules:
+  nuxt_node_modules:
