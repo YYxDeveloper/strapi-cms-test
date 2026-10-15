@@ -46,7 +46,7 @@ services:
       TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
       JWT_SECRET: ${JWT_SECRET}
       ENCRYPTION_KEY: ${ENCRYPTION_KEY}
-      CLIENT_URL: http://localhost:3001
+      CLIENT_URL: http://${PUBLIC_HOST:-localhost}:3001
       PREVIEW_SECRET: ${PREVIEW_SECRET}
       STRAPI_TELEMETRY_DISABLED: "true"
     volumes:
@@ -70,8 +70,8 @@ services:
     environment:
       <<: *node-env
       PORT: "3001"
-      WEBSITE_URL: http://localhost:3001
-      STRAPI_URL: http://localhost:1337
+      WEBSITE_URL: http://${PUBLIC_HOST:-localhost}:3001
+      STRAPI_URL: http://${PUBLIC_HOST:-localhost}:1337
       PREVIEW_SECRET: ${PREVIEW_SECRET}
       SESSION_SECRET: ${SESSION_SECRET}
     volumes:
