@@ -10,6 +10,7 @@ The Nuxt frontend's blog uses LaunchPad's default look (tall image-over-text car
 - Restyle `ArticleCard` as a horizontal card: rounded thumbnail left, text right, 4px accent left border, 16px radius.
 - Blog list grid goes from 3 columns to 2 columns on large screens.
 - Article detail hero image becomes a plain 16px-rounded image (radial fade mask removed).
+- Blog pages render in light mode via a `.blog-light` scope (`--color-blog-*` tokens); the navbar stays dark and cards outside the scope stay dark.
 - Scope is **blog only** and **Nuxt only**; Next, Astro and TanStack are not touched.
 
 ## Capabilities
