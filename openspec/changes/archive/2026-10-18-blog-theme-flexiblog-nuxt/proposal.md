@@ -10,6 +10,7 @@ The Nuxt frontend's blog uses LaunchPad's default look (tall image-over-text car
 - Restyle `ArticleCard` as a horizontal card: rounded thumbnail left, text right, 4px accent left border, 16px radius.
 - Blog list grid goes from 3 columns to 2 columns on large screens.
 - Article detail hero image becomes a plain 16px-rounded image (radial fade mask removed).
+- Blog pages render in light mode via a `.blog-light` scope (`--color-blog-*` tokens); the navbar stays dark and cards outside the scope stay dark.
 - Scope is **blog only** and **Nuxt only**; Next, Astro and TanStack are not touched.
 
 ## Capabilities
@@ -23,7 +24,7 @@ The Nuxt frontend's blog uses LaunchPad's default look (tall image-over-text car
 
 - `nuxt/app/assets/css/global.css`, `nuxt/app/components/ArticleCard.vue`, `nuxt/app/components/views/ArticleView.vue`, `nuxt/app/pages/[locale]/blog/index.vue`.
 - `ArticleCard` is also reused by related-article blocks, so those cards change shape too.
-- No Strapi schema, API, route or dependency changes.
+- No Strapi schema, API or route changes. One dev-only dependency is added at the repo root: `@playwright/test`, plus `playwright.config.ts` and `tests/e2e/blog-theme.spec.ts` for the E2E verification (tasks 2.1/2.2).
 - **Parity note**: `AGENTS.md` asks for cross-frontend parity; this change intentionally diverges for Nuxt only, at the owner's request. Porting to the other three frontends is a possible follow-up.
 
 ## Regression Risk

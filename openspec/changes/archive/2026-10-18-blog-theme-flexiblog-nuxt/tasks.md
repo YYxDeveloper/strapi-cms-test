@@ -9,9 +9,9 @@
 
 ## 2. Verification
 
-- [ ] 2.1 Write and run a headless Playwright test starting from the real entry point (nav → blog list → article), with full-page scroll (down 2s, up 2s); verify it passes
-- [ ] 2.2 Run the same test headed; verify it passes (no webm recording requested)
-- [ ] 2.3 Check `/en/blog`, `/fr/blog`, an article page and a page with RelatedArticles at `http://100.100.177.73:3001`; verify no layout breakage
+- [x] 2.1 Write and run a headless Playwright test starting from the real entry point (nav → blog list → article), with full-page scroll (down 2s, up 2s); verify it passes
+- [x] 2.2 Run the same test headed; verify it passes (no webm recording requested)
+- [x] 2.3 Check `/en/blog`, `/fr/blog`, an article page and a page with RelatedArticles at `http://100.100.177.73:3001`; verify no layout breakage
 
 ## Workflow follow-up
 

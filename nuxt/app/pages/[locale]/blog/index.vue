@@ -28,7 +28,7 @@ useLaunchpadSeo({
 </script>
 
 <template>
-  <div class="relative overflow-hidden pt-40 pb-20">
+  <div class="blog-light relative overflow-hidden pt-40 pb-20">
     <AmbientColor />
     <Container class="relative z-10">
       <Heading data-reveal>{{ blogPage?.heading ?? 'Blog' }}</Heading>
