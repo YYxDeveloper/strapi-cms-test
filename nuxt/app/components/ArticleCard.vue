@@ -21,19 +21,21 @@ const published = computed(() =>
     :to="`/${locale}/blog/${article.slug}`"
     data-reveal
     :style="`--reveal-delay: ${delay}ms`"
-    class="group flex flex-col overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900/50 transition duration-200 hover:border-neutral-700"
+    class="group shadow-blog-card bg-blog-surface border-l-blog-accent flex flex-row items-stretch gap-4 overflow-hidden rounded-2xl border-l-4 p-3 transition duration-200 hover:-translate-y-0.5"
   >
-    <div class="aspect-[16/10] w-full overflow-hidden bg-neutral-900">
+    <div
+      class="aspect-[3/4] w-28 shrink-0 overflow-hidden rounded-xl bg-neutral-900 sm:w-36"
+    >
       <StrapiMedia
         v-if="article.image"
         :media="article.image"
         :alt="article.title"
-        :width="800"
-        :height="500"
+        :width="400"
+        :height="533"
         class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
       />
     </div>
-    <div class="flex flex-1 flex-col p-5">
+    <div class="flex min-w-0 flex-1 flex-col py-2 pr-2">
       <div v-if="article.categories?.length" class="mb-3 flex flex-wrap gap-2">
         <span
           v-for="category in article.categories"

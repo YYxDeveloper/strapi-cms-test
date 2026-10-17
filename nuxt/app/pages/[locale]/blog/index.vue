@@ -38,7 +38,7 @@ useLaunchpadSeo({
 
       <div
         v-if="articles?.length"
-        class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+        class="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2"
       >
         <ArticleCard
           v-for="(article, index) in articles"

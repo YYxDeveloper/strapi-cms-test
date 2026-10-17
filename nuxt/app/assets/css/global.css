@@ -15,6 +15,11 @@
   --color-secondary: #e6e6e6;
   --color-muted: var(--color-neutral-200);
 
+  /* Blog theme, modeled on FlexiBlog Agency: dark surface cards with a blue accent. */
+  --color-blog-surface: #181a1b;
+  --color-blog-accent: #67a0ea;
+  --shadow-blog-card: 1px 1px 5px 0 rgb(1 1 1 / 0.05);
+
   --font-heading:
     'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 

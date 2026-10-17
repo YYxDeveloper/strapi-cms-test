@@ -46,11 +46,11 @@ const published = computed(() =>
           :width="800"
           :height="800"
           loading="eager"
-          class="aspect-square h-40 w-full rounded-3xl object-cover [mask-image:radial-gradient(circle,white,transparent)] md:h-96"
+          class="aspect-square h-40 w-full rounded-2xl object-cover md:h-96"
         />
         <div
           v-else
-          class="shadow-derek aspect-square h-40 w-full rounded-3xl bg-neutral-900 md:h-96"
+          class="shadow-blog-card bg-blog-surface aspect-square h-40 w-full rounded-2xl md:h-96"
         />
       </div>
 
