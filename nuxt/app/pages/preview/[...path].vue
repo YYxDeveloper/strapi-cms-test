@@ -93,7 +93,7 @@ useHead({ meta: [{ name: 'robots', content: 'noindex, nofollow' }] });
 
     <div
       v-else-if="resolved.kind === 'blog-index'"
-      class="relative overflow-hidden pt-40 pb-20"
+      class="blog-light relative overflow-hidden pt-40 pb-20"
     >
       <AmbientColor />
       <Container class="relative z-10">

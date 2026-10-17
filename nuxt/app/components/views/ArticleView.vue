@@ -17,7 +17,7 @@ const published = computed(() =>
 </script>
 
 <template>
-  <div class="relative overflow-hidden">
+  <div class="blog-light relative overflow-hidden">
     <AmbientColor />
     <Container class="relative z-10 mt-16 lg:mt-32">
       <div class="flex items-center justify-between px-2 py-8">
@@ -61,26 +61,26 @@ const published = computed(() =>
               <p
                 v-for="category in article.categories"
                 :key="category.name"
-                class="text-muted rounded-full bg-neutral-800 px-2 py-1 text-xs font-bold capitalize"
+                class="text-muted rounded-full bg-blog-chip px-2 py-1 text-xs font-bold capitalize"
               >
                 {{ category.name }}
               </p>
             </div>
 
             <h1
-              class="mt-8 text-4xl font-bold tracking-tight text-neutral-200 sm:text-5xl"
+              class="mt-8 text-4xl font-bold tracking-tight text-blog-title sm:text-5xl"
             >
               {{ article.title }}
             </h1>
 
             <BlocksRenderer
               :content="article.content"
-              class="prose prose-sm prose-invert mt-8 max-w-none"
+              class="prose prose-sm mt-8 max-w-none"
             />
 
             <div
               v-if="published"
-              class="mt-12 flex items-center space-x-2 border-t border-neutral-800 pt-12"
+              class="mt-12 flex items-center space-x-2 border-t border-blog-rule pt-12"
             >
               <div class="h-5 w-0.5 rounded-lg bg-neutral-700" />
               <time :datetime="article.publishedAt" class="text-muted text-sm">

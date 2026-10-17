@@ -3,7 +3,8 @@ import { type Page, expect, test } from '@playwright/test';
 const LOCALES = ['en', 'fr'] as const;
 
 const ACCENT = 'rgb(103, 160, 234)';
-const SURFACE = 'rgb(24, 26, 27)';
+const SURFACE = 'rgb(255, 255, 255)';
+const PAGE_BG = 'rgb(244, 246, 248)';
 
 /** Scrolls the window to an absolute Y position over `durationMs` (eased). */
 async function smoothScroll(page: Page, to: number, durationMs: number) {
@@ -76,6 +77,12 @@ for (const locale of LOCALES) {
     );
     expect(columns).toBe(2);
 
+    const listBg = await page
+      .locator('.blog-light')
+      .first()
+      .evaluate((el) => getComputedStyle(el).backgroundColor);
+    expect(listBg).toBe(PAGE_BG);
+
     await fullPageScroll(page);
 
     await card.click();
@@ -93,6 +100,12 @@ for (const locale of LOCALES) {
     });
     expect(heroStyle.borderRadius).toBe('16px');
     expect(['none', '']).toContain(heroStyle.maskImage);
+
+    const articleBg = await page
+      .locator('.blog-light')
+      .first()
+      .evaluate((el) => getComputedStyle(el).backgroundColor);
+    expect(articleBg).toBe(PAGE_BG);
 
     await fullPageScroll(page);
   });

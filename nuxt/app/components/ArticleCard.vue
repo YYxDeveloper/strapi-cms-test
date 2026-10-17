@@ -24,7 +24,7 @@ const published = computed(() =>
     class="group shadow-blog-card bg-blog-surface border-l-blog-accent flex flex-row items-stretch gap-4 overflow-hidden rounded-2xl border-l-4 p-3 transition duration-200 hover:-translate-y-0.5"
   >
     <div
-      class="aspect-[3/4] w-28 shrink-0 overflow-hidden rounded-xl bg-neutral-900 sm:w-36"
+      class="aspect-[3/4] w-28 shrink-0 overflow-hidden rounded-xl bg-blog-thumb sm:w-36"
     >
       <StrapiMedia
         v-if="article.image"
@@ -40,13 +40,13 @@ const published = computed(() =>
         <span
           v-for="category in article.categories"
           :key="category.name"
-          class="text-muted rounded-full bg-neutral-800 px-2 py-1 text-xs font-bold capitalize"
+          class="text-muted rounded-full bg-blog-chip px-2 py-1 text-xs font-bold capitalize"
         >
           {{ category.name }}
         </span>
       </div>
       <h3
-        class="text-base font-semibold text-neutral-100 transition group-hover:text-white md:text-lg"
+        class="text-base font-semibold text-blog-title transition group-hover:text-blog-title-hover md:text-lg"
       >
         {{ article.title }}
       </h3>
