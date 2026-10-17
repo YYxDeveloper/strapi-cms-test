@@ -26,7 +26,7 @@ const published = computed(() =>
     data-reveal
     :style="`--reveal-delay: ${delay}ms`"
     :class="[
-      'group shadow-blog-card bg-blog-surface block overflow-hidden transition duration-200 hover:-translate-y-0.5',
+      'group shadow-blog-card bg-blog-surface overflow-hidden transition duration-200 hover:-translate-y-0.5',
       variant === 'horizontal'
         ? 'border-l-blog-accent flex flex-row items-stretch gap-4 rounded-2xl border-l-4 p-3'
         : 'flex flex-col rounded-2xl',

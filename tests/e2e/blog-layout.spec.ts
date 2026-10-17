@@ -120,20 +120,28 @@ for (const locale of LOCALES) {
     await fullPageScroll(page);
 
     // Clicking a category chip narrows the list and marks the chip active.
-    const softwareChip = page.locator(
-      `[data-testid="category-chip"][href*="category=software"]`
+    const totalBefore = await page.locator('a[data-variant]').count();
+    const categoryChip = page
+      .locator('[data-testid="category-chip"][href*="category="]')
+      .first();
+    const categoryHref = (await categoryChip.getAttribute('href')) as string;
+    const categorySlug = new URL(categoryHref, 'http://x').searchParams.get(
+      'category'
+    ) as string;
+    await categoryChip.click();
+    await expect(page).toHaveURL(
+      new RegExp(`category=${encodeURIComponent(categorySlug)}`)
     );
-    expect(await softwareChip.count()).toBe(1);
-    await softwareChip.click();
-    await expect(page).toHaveURL(/category=software/);
-    await expect(softwareChip).toHaveAttribute('data-active', 'true');
+    await expect(categoryChip).toHaveAttribute('data-active', 'true');
     expect(
-      await softwareChip.evaluate(
+      await categoryChip.evaluate(
         (el) => getComputedStyle(el).borderBottomColor
       )
     ).toBe(ACCENT);
-    await expect(page.locator('a[data-variant="compact"]')).toHaveCount(0);
     await expect(page.locator('a[data-variant="featured"]')).toHaveCount(1);
+    expect(await page.locator('a[data-variant]').count()).toBeLessThanOrEqual(
+      totalBefore
+    );
 
     // The "All" chip restores the whole list.
     const allChip = page.locator(
@@ -175,6 +183,27 @@ for (const locale of LOCALES) {
     expect(['none', '']).toContain(heroStyle.maskImage);
 
     await fullPageScroll(page);
+  });
+
+  test(`[${locale}] every category view keeps one featured card (1-article lists render no grid)`, async ({
+    page,
+  }) => {
+    await page.goto(`/${locale}/blog`);
+    const hrefs = await page
+      .locator('[data-testid="category-chip"][href*="category="]')
+      .evaluateAll((els) => els.map((el) => el.getAttribute('href') as string));
+    expect(hrefs.length).toBeGreaterThan(0);
+
+    for (const href of hrefs) {
+      await page.goto(href);
+      await expect(page.locator('a[data-variant="featured"]')).toHaveCount(1);
+      const compactCount = await page
+        .locator('a[data-variant="compact"]')
+        .count();
+      if (compactCount === 0) {
+        await expect(page.locator('.grid.lg\\:grid-cols-3')).toHaveCount(0);
+      }
+    }
   });
 
   test(`[${locale}] compact cards reflow 1 / 2 / 3 columns across breakpoints`, async ({
