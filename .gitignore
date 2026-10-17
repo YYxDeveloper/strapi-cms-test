@@ -1,5 +1,9 @@
 node_modules
 docs
+test-results
+playwright-report
+blob-report
+playwright/.cache
 .DS_Store
 .vscode
 .env
